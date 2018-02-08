@@ -10,6 +10,7 @@ echo [INFO] Tunneling ${SSH_HOSTUSER:=root}@${SSH_HOSTNAME:=localhost}:${SSH_TUN
 
 echo autossh \
  -M 0 \
+ -N \
  -o StrictHostKeyChecking=no \
  -o ServerAliveInterval=5 \
  -o ServerAliveCountMax=1 \
@@ -25,6 +26,7 @@ AUTOSSH_LOGLEVEL=0 \
 AUTOSSH_LOGFILE=/dev/stdout \
 autossh \
  -M 0 \
+ -N \
  -o StrictHostKeyChecking=no \
  -o ServerAliveInterval=5 \
  -o ServerAliveCountMax=1 \
