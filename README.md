@@ -78,6 +78,22 @@ event there is ever a need to revoke one or the other.
 What would a docker container be without customization? I have an extensive
 list of environment variables that can be set.
 
+### Mounts
+
+#### /id_rsa
+
+Mount the key you generated within the **Setup** step, or set
+`SSH_KEY_FILE`.
+
+    -v /path/to/id_rsa:/id_rsa
+
+#### /known_hosts
+
+Mount the `known_hosts` file if you want to enable **STRICT_KEY_CHECKING**,
+or set `SSH_KNOWN_HOSTS`.
+
+    -v /path/to/known_hosts:/known_hosts
+
 ### Environment Variables
 
 #### SSH_HOSTUSER
@@ -96,8 +112,9 @@ tunnel entrance. (Default: random > 32768)  If you do not want a new port
 every time you restart **jnovack/autossh** you may wish to explicitly set
 this.
 
-If you want to bind local forward tunnel to all interfaces, specify value
-like this: `*:2222`
+This option reverses if you set `SSH_MODE` (see below).  To bind a local
+forward tunnel to all interfaces, use an asterisk then the port desigation
+(e.g. `*:2222`).
 
 #### SSH_TUNNEL_HOST
 
@@ -112,24 +129,20 @@ elasticsearch (port: 9200) or good old http (port: 80) and https (port: 443).
 
 #### SSH_KEY_FILE
 
-Specify where to look for SSH key file. By default it is in `/id_rsa` but if 
-you want to keep it in more secure environment e.g. Docker Secrets, you can
-override it.
+In the event you wish to store the key in Docker Secrets, you may wish to
+set this to `/run/secrets/*secret-name*`
+
+#### SSH_KNOWN_HOSTS
+
+In the event you wish to store the `known_hosts` in Docker Secrets, you may
+wish to set this to `/run/secrets/*secret-name*`
 
 #### SSH_MODE
 
 Defines how the tunnel will be set up:
 
-* *-R* is default, remote forward mode
-* *-L* means local forward mode
-
-### Docker Volumes
-
-#### /id_rsa
-
-Mount the key you generated within the **Setup** step.
-
-    -v /path/to/id_rsa:/id_rsa
+* `-R` is default, remote forward mode
+* `-L` means local forward mode
 
 ## Examples
 
